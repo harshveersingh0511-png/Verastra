@@ -1,0 +1,100 @@
+/* ──────────────────────────────────────────────────────────────────────
+   VERASTRA — BASE
+   Reset, typography, base elements. Surface-agnostic foundation.
+   ────────────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: var(--t-16);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Typography roles ───────────────────────────────────────────────── */
+
+.serif       { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; }
+.serif-tight { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.025em; }
+.mono        { font-family: var(--font-mono); font-weight: 400; letter-spacing: 0.02em; }
+.label       { font-family: var(--font-mono); font-size: var(--t-12); text-transform: uppercase;
+               letter-spacing: 0.14em; color: var(--ink-tertiary); }
+
+h1, h2, h3, h4 { margin: 0; font-weight: 500; line-height: 1.15; }
+p { margin: 0; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--accent-hi); }
+
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+/* Numeric & tabular ──────────────────────────────────────────────── */
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Focus ──────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Selection ──────────────────────────────────────────────────────── */
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink-primary);
+}
+
+/* Scrollbar — subtle ─────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--hairline-hi);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-tertiary); }
+
+/* Reduced motion ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
