@@ -1,0 +1,12 @@
+{
+  "cluster_key": "sales_marketing_growth",
+  "v1_status": "light",
+  "_note": "Sales/marketing/growth-heavy employers. Light seed; expand in Phase 3 onboarding.",
+  "employers": [
+    { "name": "Razorpay", "careers_url": "https://razorpay.com/jobs/", "parser": "lever", "lever_token": "razorpay", "default_paths_hint": ["sales", "growth_category", "account_management"], "active": true },
+    { "name": "Swiggy", "careers_url": "https://careers.swiggy.com/", "parser": "lever", "lever_token": "swiggy", "default_paths_hint": ["sales", "brand_marketing", "growth_category"], "active": true },
+    { "name": "Zomato", "careers_url": "https://www.zomato.com/careers", "parser": "lever", "lever_token": "zomato", "default_paths_hint": ["sales", "brand_marketing"], "active": true },
+    { "name": "Nykaa", "careers_url": "https://www.nykaa.com/careers", "parser": "listing-page", "default_paths_hint": ["brand_marketing", "performance_marketing", "growth_category"], "active": true },
+    { "name": "Mamaearth", "careers_url": "https://www.mamaearth.in/careers", "parser": "listing-page", "default_paths_hint": ["brand_marketing", "performance_marketing"], "active": true }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "cluster_key": "academia_education_training",
+  "v1_status": "light",
+  "_note": "Edtech + academic employers. Light V1 list.",
+  "employers": [
+    { "name": "BYJU'S", "careers_url": "https://byjus.com/careers/", "parser": "listing-page", "default_paths_hint": ["edtech_program_roles", "coaching_learning"], "active": true },
+    { "name": "Unacademy", "careers_url": "https://unacademy.com/careers", "parser": "listing-page", "default_paths_hint": ["edtech_program_roles", "faculty_teaching"], "active": true },
+    { "name": "upGrad", "careers_url": "https://www.upgrad.com/about-us/careers/", "parser": "listing-page", "default_paths_hint": ["edtech_program_roles", "curriculum_program"], "active": true }
+  ]
+}
