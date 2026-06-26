@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// ──────────────────────────────────────────────────────────────────────
+// Verastra · Firestore rules — Market Overlay V1
+//
+// Posture:
+//   - Backend-only writes (firebase-admin via service account bypasses these)
+//   - Public read on normalized overlay collections + derived docs + snapshots
+//   - Locked: raw ingest, debug runs
+//   - All other paths remain denied (preserves the previous global-deny posture)
+// ──────────────────────────────────────────────────────────────────────
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Public-read overlay collections — backend writes only.
+    match /role_city_market/{doc}   { allow read: if true;  allow write: if false; }
+    match /role_skill_market/{doc}  { allow read: if true;  allow write: if false; }
+    match /city_market_summary/{doc}{ allow read: if true;  allow write: if false; }
+    match /overlay_derived/{doc}    { allow read: if true;  allow write: if false; }
+    match /market_snapshots/{doc}   { allow read: if true;  allow write: if false; }
+
+    // Locked: raw ingest and debug logs (admin SDK only).
+    match /overlay_raw_ingest/{doc} { allow read, write: if false; }
+    match /overlay_debug_runs/{doc} { allow read, write: if false; }
+
+    // Default deny.
+    match /{document=**}            { allow read, write: if false; }
+  }
+}

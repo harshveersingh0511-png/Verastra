@@ -1,0 +1,10 @@
+{
+  "cluster_key": "design_creative_media",
+  "v1_status": "light",
+  "_note": "Design-employer pages — thin V1 list.",
+  "employers": [
+    { "name": "Atlassian", "careers_url": "https://www.atlassian.com/company/careers/all-jobs", "parser": "greenhouse", "board_token": "atlassian", "default_paths_hint": ["product_design", "ux_design"], "active": true },
+    { "name": "Razorpay", "careers_url": "https://razorpay.com/jobs/", "parser": "lever", "lever_token": "razorpay", "default_paths_hint": ["product_design", "ux_design", "brand_design"], "active": true },
+    { "name": "Zomato", "careers_url": "https://www.zomato.com/careers", "parser": "lever", "lever_token": "zomato", "default_paths_hint": ["product_design", "brand_design"], "active": true }
+  ]
+}

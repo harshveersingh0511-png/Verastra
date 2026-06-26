@@ -1,0 +1,151 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Per-cluster search query seeds for broad adapters (naukri, indeed_in, foundit). Each cluster declares the search terms to fan out across its target cities. Schema: { <cluster_key>: { broad_queries: string[], city_keys: string[] } }. Underscore-prefixed keys (like _meta) are skipped at runtime by the adapters.",
+    "guidance": "broad_queries: use natural-language search terms that match how jobs are typically titled on Indian job boards. Generic terms (\"finance manager\") cast a wider net than narrow ones (\"chartered accountant tax\"). city_keys: must match canonical city_keys from paths.js — adapters use CITIES[key].label to build the search URL."
+  },
+
+  "fin_acct_tax": {
+    "broad_queries": [
+      "chartered accountant",
+      "finance manager",
+      "financial planning analysis",
+      "transfer pricing",
+      "direct tax",
+      "controller"
+    ],
+    "city_keys": ["mumbai", "bangalore", "delhi", "gurgaon", "hyderabad", "pune"]
+  },
+
+  "consulting_strategy_deals": {
+    "broad_queries": [
+      "management consultant",
+      "strategy consultant",
+      "corporate strategy",
+      "mergers acquisitions",
+      "deals advisory",
+      "business consulting"
+    ],
+    "city_keys": ["mumbai", "delhi", "gurgaon", "bangalore", "chennai", "hyderabad"]
+  },
+
+  "product_tech_data": {
+    "broad_queries": [
+      "software engineer",
+      "data engineer",
+      "product manager",
+      "data scientist",
+      "engineering manager",
+      "backend developer"
+    ],
+    "city_keys": ["bangalore", "hyderabad", "pune", "chennai", "gurgaon", "noida"]
+  },
+
+  "sales_marketing_growth": {
+    "broad_queries": [
+      "sales manager",
+      "marketing manager",
+      "growth manager",
+      "performance marketing",
+      "business development",
+      "enterprise sales"
+    ],
+    "city_keys": ["mumbai", "bangalore", "delhi", "gurgaon", "hyderabad", "pune"]
+  },
+
+  "ops_scm_procurement": {
+    "broad_queries": [
+      "supply chain manager",
+      "operations manager",
+      "procurement manager",
+      "logistics manager",
+      "warehouse manager",
+      "sourcing manager"
+    ],
+    "city_keys": ["mumbai", "bangalore", "chennai", "delhi", "pune", "ahmedabad"]
+  },
+
+  "hr_talent_ld": {
+    "broad_queries": [
+      "hr business partner",
+      "talent acquisition",
+      "learning and development",
+      "compensation benefits",
+      "people operations",
+      "hr manager"
+    ],
+    "city_keys": ["mumbai", "bangalore", "delhi", "gurgaon", "hyderabad", "pune"]
+  },
+
+  "legal_compliance_risk_policy": {
+    "broad_queries": [
+      "legal counsel",
+      "compliance manager",
+      "risk manager",
+      "company secretary",
+      "regulatory affairs",
+      "general counsel"
+    ],
+    "city_keys": ["mumbai", "delhi", "gurgaon", "bangalore", "hyderabad", "chennai"]
+  },
+
+  "research_analytics_knowledge": {
+    "broad_queries": [
+      "equity research",
+      "credit research",
+      "research analyst",
+      "knowledge management",
+      "business analyst",
+      "market research"
+    ],
+    "city_keys": ["mumbai", "bangalore", "gurgaon", "hyderabad", "pune", "delhi"]
+  },
+
+  "design_creative_media": {
+    "broad_queries": [
+      "product designer",
+      "ux designer",
+      "visual designer",
+      "content writer",
+      "brand manager",
+      "design manager"
+    ],
+    "city_keys": ["bangalore", "mumbai", "delhi", "gurgaon", "hyderabad", "pune"]
+  },
+
+  "govt_psu_public_sector": {
+    "broad_queries": [
+      "psu",
+      "government job",
+      "public sector officer",
+      "officer trainee",
+      "executive trainee",
+      "deputy manager"
+    ],
+    "city_keys": ["delhi", "mumbai", "kolkata", "chennai", "hyderabad", "bangalore"]
+  },
+
+  "academia_education_training": {
+    "broad_queries": [
+      "assistant professor",
+      "associate professor",
+      "lecturer",
+      "research scholar",
+      "academic dean",
+      "training manager"
+    ],
+    "city_keys": ["delhi", "bangalore", "mumbai", "kolkata", "chennai", "hyderabad"]
+  },
+
+  "healthcare_pharma_clinical_business": {
+    "broad_queries": [
+      "medical affairs",
+      "clinical research",
+      "pharma sales",
+      "medical writer",
+      "regulatory affairs pharma",
+      "hospital administrator"
+    ],
+    "city_keys": ["mumbai", "bangalore", "hyderabad", "delhi", "chennai", "ahmedabad"]
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Per-source applicability across the 12 canonical clusters. Consumed by aggregate/index.js (influenceWeight, sourceTier, salaryCaptureAllowed) and the dashboard coverage health calculation.",
+    "schema": {
+      "<source_id>": {
+        "v1_status":          "live | light | future_slot",
+        "source_tier":        "T1 (anchor) | T2 (corroborative) | T3 (auxiliary)",
+        "salary_clue_capture": "true if salary fields are usable from this source",
+        "influence_weight":   "{ <cluster_key>: [0.0..1.0] } — how much weight a posting from this source carries toward each cluster"
+      }
+    },
+    "tier_definitions": {
+      "T1": "Anchor source. Tight relevance, high signal-to-noise. Confidence boost.",
+      "T2": "Corroborative source. Reliable but broader; needs T1 backing for HIGH tier.",
+      "T3": "Auxiliary source. Light evidence only; never lifts a cell above MEDIUM alone."
+    }
+  },
+
+  "naukri": {
+    "v1_status": "live",
+    "source_tier": "T2",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.90,
+      "consulting_strategy_deals":          0.55,
+      "product_tech_data":                  0.85,
+      "sales_marketing_growth":             0.90,
+      "ops_scm_procurement":                0.90,
+      "hr_talent_ld":                       0.85,
+      "legal_compliance_risk_policy":       0.60,
+      "research_analytics_knowledge":       0.70,
+      "design_creative_media":              0.55,
+      "govt_psu_public_sector":             0.20,
+      "academia_education_training":        0.45,
+      "healthcare_pharma_clinical_business": 0.80
+    }
+  },
+
+  "indeed_in": {
+    "v1_status": "live",
+    "source_tier": "T2",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.75,
+      "consulting_strategy_deals":          0.45,
+      "product_tech_data":                  0.80,
+      "sales_marketing_growth":             0.85,
+      "ops_scm_procurement":                0.80,
+      "hr_talent_ld":                       0.75,
+      "legal_compliance_risk_policy":       0.50,
+      "research_analytics_knowledge":       0.55,
+      "design_creative_media":              0.50,
+      "govt_psu_public_sector":             0.15,
+      "academia_education_training":        0.40,
+      "healthcare_pharma_clinical_business": 0.65
+    }
+  },
+
+  "foundit": {
+    "v1_status": "live",
+    "source_tier": "T2",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.70,
+      "consulting_strategy_deals":          0.45,
+      "product_tech_data":                  0.65,
+      "sales_marketing_growth":             0.75,
+      "ops_scm_procurement":                0.70,
+      "hr_talent_ld":                       0.65,
+      "legal_compliance_risk_policy":       0.45,
+      "research_analytics_knowledge":       0.50,
+      "design_creative_media":              0.45,
+      "govt_psu_public_sector":             0.10,
+      "academia_education_training":        0.30,
+      "healthcare_pharma_clinical_business": 0.65
+    }
+  },
+
+  "iimjobs": {
+    "v1_status": "live",
+    "source_tier": "T1",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.95,
+      "consulting_strategy_deals":          0.95,
+      "product_tech_data":                  0.55,
+      "sales_marketing_growth":             0.85,
+      "ops_scm_procurement":                0.75,
+      "hr_talent_ld":                       0.80,
+      "legal_compliance_risk_policy":       0.60,
+      "research_analytics_knowledge":       0.70,
+      "design_creative_media":              0.20,
+      "govt_psu_public_sector":             0.05,
+      "academia_education_training":        0.15,
+      "healthcare_pharma_clinical_business": 0.40
+    }
+  },
+
+  "wellfound_in": {
+    "v1_status": "live",
+    "source_tier": "T1",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.55,
+      "consulting_strategy_deals":          0.30,
+      "product_tech_data":                  0.95,
+      "sales_marketing_growth":             0.80,
+      "ops_scm_procurement":                0.45,
+      "hr_talent_ld":                       0.55,
+      "legal_compliance_risk_policy":       0.30,
+      "research_analytics_knowledge":       0.55,
+      "design_creative_media":              0.75,
+      "govt_psu_public_sector":             0.00,
+      "academia_education_training":        0.10,
+      "healthcare_pharma_clinical_business": 0.40
+    }
+  },
+
+  "cutshort": {
+    "v1_status": "live",
+    "source_tier": "T2",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.45,
+      "consulting_strategy_deals":          0.25,
+      "product_tech_data":                  0.85,
+      "sales_marketing_growth":             0.70,
+      "ops_scm_procurement":                0.40,
+      "hr_talent_ld":                       0.55,
+      "legal_compliance_risk_policy":       0.25,
+      "research_analytics_knowledge":       0.50,
+      "design_creative_media":              0.70,
+      "govt_psu_public_sector":             0.00,
+      "academia_education_training":        0.10,
+      "healthcare_pharma_clinical_business": 0.35
+    }
+  },
+
+  "psu_official_portals": {
+    "v1_status": "live",
+    "source_tier": "T1",
+    "salary_clue_capture": false,
+    "influence_weight": {
+      "fin_acct_tax":                       0.30,
+      "consulting_strategy_deals":          0.05,
+      "product_tech_data":                  0.20,
+      "sales_marketing_growth":             0.15,
+      "ops_scm_procurement":                0.45,
+      "hr_talent_ld":                       0.25,
+      "legal_compliance_risk_policy":       0.45,
+      "research_analytics_knowledge":       0.35,
+      "design_creative_media":              0.10,
+      "govt_psu_public_sector":             0.98,
+      "academia_education_training":        0.75,
+      "healthcare_pharma_clinical_business": 0.55
+    }
+  },
+
+  "employer_careers": {
+    "v1_status": "live",
+    "source_tier": "T1",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax":                       0.90,
+      "consulting_strategy_deals":          0.85,
+      "product_tech_data":                  0.95,
+      "sales_marketing_growth":             0.85,
+      "ops_scm_procurement":                0.80,
+      "hr_talent_ld":                       0.80,
+      "legal_compliance_risk_policy":       0.70,
+      "research_analytics_knowledge":       0.75,
+      "design_creative_media":              0.80,
+      "govt_psu_public_sector":             0.30,
+      "academia_education_training":        0.55,
+      "healthcare_pharma_clinical_business": 0.80
+    }
+  },
+
+  "linkedin": {
+    "v1_status": "future_slot",
+    "salary_clue_capture": false,
+    "influence_weight": {
+      "fin_acct_tax": 0, "consulting_strategy_deals": 0, "product_tech_data": 0,
+      "sales_marketing_growth": 0, "ops_scm_procurement": 0, "hr_talent_ld": 0,
+      "legal_compliance_risk_policy": 0, "research_analytics_knowledge": 0,
+      "design_creative_media": 0, "govt_psu_public_sector": 0,
+      "academia_education_training": 0, "healthcare_pharma_clinical_business": 0
+    }
+  },
+
+  "hirist": {
+    "v1_status": "future_slot",
+    "salary_clue_capture": false,
+    "influence_weight": {
+      "fin_acct_tax": 0, "consulting_strategy_deals": 0, "product_tech_data": 0,
+      "sales_marketing_growth": 0, "ops_scm_procurement": 0, "hr_talent_ld": 0,
+      "legal_compliance_risk_policy": 0, "research_analytics_knowledge": 0,
+      "design_creative_media": 0, "govt_psu_public_sector": 0,
+      "academia_education_training": 0, "healthcare_pharma_clinical_business": 0
+    }
+  },
+
+  "shine": {
+    "v1_status": "future_slot",
+    "salary_clue_capture": false,
+    "influence_weight": {
+      "fin_acct_tax": 0, "consulting_strategy_deals": 0, "product_tech_data": 0,
+      "sales_marketing_growth": 0, "ops_scm_procurement": 0, "hr_talent_ld": 0,
+      "legal_compliance_risk_policy": 0, "research_analytics_knowledge": 0,
+      "design_creative_media": 0, "govt_psu_public_sector": 0,
+      "academia_education_training": 0, "healthcare_pharma_clinical_business": 0
+    }
+  },
+
+  "behance_dribbble": {
+    "v1_status": "future_slot",
+    "salary_clue_capture": false,
+    "influence_weight": {
+      "fin_acct_tax": 0, "consulting_strategy_deals": 0, "product_tech_data": 0,
+      "sales_marketing_growth": 0, "ops_scm_procurement": 0, "hr_talent_ld": 0,
+      "legal_compliance_risk_policy": 0, "research_analytics_knowledge": 0,
+      "design_creative_media": 0, "govt_psu_public_sector": 0,
+      "academia_education_training": 0, "healthcare_pharma_clinical_business": 0
+    }
+  },
+
+  "remoteok": {
+    "v1_status": "future_slot",
+    "source_tier": "T3",
+    "salary_clue_capture": true,
+    "influence_weight": {
+      "fin_acct_tax": 0, "consulting_strategy_deals": 0, "product_tech_data": 0,
+      "sales_marketing_growth": 0, "ops_scm_procurement": 0, "hr_talent_ld": 0,
+      "legal_compliance_risk_policy": 0, "research_analytics_knowledge": 0,
+      "design_creative_media": 0, "govt_psu_public_sector": 0,
+      "academia_education_training": 0, "healthcare_pharma_clinical_business": 0
+    }
+  }
+}
