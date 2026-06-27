@@ -11,24 +11,18 @@
      https://www.naukri.com/<role-slug>-jobs-in-<city-slug>?k=<role>&l=<city>
    ────────────────────────────────────────────────────────────────────── */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { getText, slug } from '../util/http.js';
 import { extractJsonLd, jsonLdJobPostings } from '../util/html.js';
 import { validateAdapter } from './_base.js';
 import { CITIES } from '../../../../assets/js/data/paths.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SEEDS_PATH = path.resolve(__dirname, '../../../../assets/js/data/cluster-search-seeds.json');
+/* Bundler-inlined seeds. esbuild reads cluster-search-seeds.json at
+   bundle time and embeds the value here — no runtime fs.readFile or
+   import.meta.url. Works under both ESM and CJS bundle output. */
+import SEEDS from '../../../../assets/js/data/cluster-search-seeds.json' with { type: 'json' };
 
 const MAX_QUERIES_PER_CLUSTER = 6;
 const MAX_CITIES_PER_CLUSTER = 6;
-
-async function loadSeeds() {
-  const raw = await fs.readFile(SEEDS_PATH, 'utf8');
-  return JSON.parse(raw);
-}
 
 function buildUrl(query, cityKey) {
   const cityLabel = CITIES[cityKey]?.label || cityKey;
@@ -40,7 +34,7 @@ const adapter = {
   kind: 'broad',
   v1_status: 'live',
   async fetch(ctx) {
-    const seeds = await loadSeeds().catch(() => ({}));
+    const seeds = SEEDS || {};
     const all = [];
     const startedAt = Date.now();
     const budget = ctx.timeBudgetMs;
