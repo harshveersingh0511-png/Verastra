@@ -1,0 +1,419 @@
+/* ──────────────────────────────────────────────────────────────────────
+   TERMINAL surface — Phase 6
+   Glass material rationed to the command surface and the memo card.
+   ────────────────────────────────────────────────────────────────────── */
+
+.terminal-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 44px 32px 80px;
+}
+
+.terminal-page__header {
+  margin-bottom: 36px;
+}
+.terminal-page__crumb {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--ink-tertiary);
+  margin-bottom: 14px;
+}
+.terminal-page__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: -0.012em;
+  color: var(--ink-primary);
+  margin: 0 0 14px;
+  line-height: 1.1;
+}
+.terminal-page__lede {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+  margin: 0;
+  max-width: 700px;
+}
+
+/* ── Command surface (glass) ─────────────────────────────────── */
+.terminal-command {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface-1) 92%, transparent) 0%, color-mix(in oklab, var(--surface-2) 96%, transparent) 100%);
+  border: 1px solid var(--line-1);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 color-mix(in oklab, white 6%, transparent) inset, 0 12px 24px -18px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
+}
+.terminal-command__prompt {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0 4px;
+}
+.terminal-command__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  color: var(--ink-primary);
+  padding: 8px 4px;
+  caret-color: var(--accent);
+}
+.terminal-command__input::placeholder { color: var(--ink-tertiary); }
+.terminal-command__run {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.terminal-command__run:hover { opacity: 0.85; }
+
+/* ── Samples ────────────────────────────────────────────────── */
+.terminal-samples {
+  margin-bottom: 28px;
+  padding: 14px 4px;
+}
+.terminal-samples__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-tertiary);
+  margin-bottom: 10px;
+}
+.terminal-samples__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.terminal-samples__item {
+  background: transparent;
+  border: 1px solid var(--line-1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.terminal-samples__item:hover {
+  border-color: var(--accent);
+  color: var(--ink-primary);
+}
+
+/* ── Memo card (glass) ──────────────────────────────────────── */
+.terminal-memo {
+  margin-bottom: 36px;
+}
+.terminal-memo[data-empty="true"] {
+  padding: 56px 24px;
+  text-align: center;
+  border: 1px dashed var(--line-1);
+  border-radius: 14px;
+  background: transparent;
+}
+.terminal-memo__empty {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-tertiary);
+}
+.terminal-memo__empty strong { color: var(--ink-primary); }
+
+.memo {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface-1) 92%, transparent) 0%, color-mix(in oklab, var(--surface-2) 96%, transparent) 100%);
+  border: 1px solid var(--line-1);
+  border-radius: 16px;
+  box-shadow: 0 1px 0 color-mix(in oklab, white 5%, transparent) inset, 0 20px 36px -20px rgba(0,0,0,0.5);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.memo__header {
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid var(--line-1);
+}
+.memo__crumb {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-tertiary);
+  margin-bottom: 10px;
+}
+.memo__query {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  margin-bottom: 14px;
+}
+.memo__query-text { color: var(--ink-primary); }
+
+.memo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.memo-meta__chip {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+  padding: 4px 9px;
+  background: var(--surface-1);
+  border: 1px solid var(--line-1);
+  border-radius: 6px;
+}
+.memo-meta__chip code { color: var(--accent); font-family: inherit; }
+.memo-meta__chip strong { color: var(--ink-primary); }
+.memo-meta__chip--warn { color: var(--data-amber); border-color: color-mix(in oklab, var(--data-amber) 30%, var(--line-1)); }
+
+.memo-meta__alts {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-tertiary);
+}
+.memo-meta__alts-label { letter-spacing: 0.08em; }
+.memo-meta__alt {
+  padding: 2px 6px;
+  background: transparent;
+  border: 1px solid var(--line-1);
+  border-radius: 4px;
+  color: var(--ink-tertiary);
+}
+
+.memo-entities {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.memo-entities__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-tertiary);
+}
+.memo-entities__chip {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 3px 8px;
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 24%, var(--line-1));
+  border-radius: 5px;
+  color: var(--ink-primary);
+}
+.memo-entities__k {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-right: 4px;
+}
+
+.memo-section {
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--line-1);
+}
+.memo-section:last-child { border-bottom: none; }
+.memo-section__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-tertiary);
+  margin-bottom: 12px;
+}
+.memo-section__body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+.memo-section--headline {
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+.memo-headline__value {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.memo-headline__num {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 56px;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  line-height: 1;
+}
+.memo-headline__unit {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.04em;
+}
+.memo-headline__text {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+/* Evidence table */
+.memo-evidence {
+  width: 100%;
+  border-collapse: collapse;
+}
+.memo-evidence tr { border-bottom: 1px solid var(--line-1); }
+.memo-evidence tr:last-child { border-bottom: none; }
+.memo-evidence td {
+  padding: 10px 0;
+  vertical-align: top;
+}
+.memo-evidence__label {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  width: 32%;
+}
+.memo-evidence__value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-primary);
+  width: 32%;
+}
+.memo-evidence__source {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-tertiary);
+  text-align: right;
+}
+
+/* Next */
+.memo-next {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.memo-next__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-1);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--ink-primary);
+  font-size: 13.5px;
+  transition: all 0.15s ease;
+}
+.memo-next__link:hover {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+}
+.memo-next__arrow {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+/* Provenance */
+.memo-section--provenance { background: color-mix(in oklab, var(--surface-2) 50%, transparent); }
+.memo-provenance {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.memo-provenance li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+}
+.memo-provenance__label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-tertiary);
+  width: 130px;
+}
+.memo-provenance__source {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-secondary);
+  flex: 1;
+}
+.memo-provenance__tier {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--surface-1);
+  border: 1px solid var(--line-1);
+}
+.memo-provenance__tier[data-tier="S"] { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 28%, var(--line-1)); }
+.memo-provenance__tier[data-tier="A"] { color: var(--data-blue); }
+.memo-provenance__tier[data-tier="B"] { color: var(--ink-tertiary); }
+
+/* Meta footer */
+.terminal-meta {
+  margin-top: 36px;
+  padding: 22px 24px;
+  border: 1px solid var(--line-1);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--surface-2) 50%, transparent);
+}
+.terminal-meta__title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-tertiary);
+  margin-bottom: 12px;
+}
+.terminal-meta__list {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px 16px;
+}
+.terminal-meta__list li code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-secondary);
+}
+.terminal-meta__note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-tertiary);
+  padding-top: 10px;
+  border-top: 1px solid var(--line-1);
+}
+.terminal-meta__note strong { color: var(--ink-secondary); }

@@ -1,0 +1,439 @@
+{
+  "meta": {
+    "benchmark_version": "v2026.06",
+    "newest_engine_slug": "path-comparison",
+    "terminal_routes": [
+      "professional-capital-value",
+      "cohort-benchmark",
+      "career-volatility-index",
+      "path-comparison"
+    ]
+  },
+
+  "decision_entries": [
+    {
+      "kind": "Valuation",
+      "question": "Value the current path",
+      "route_slug": "professional-capital-value",
+      "route_label": "Professional Capital Value",
+      "framework": "HCAM"
+    },
+    {
+      "kind": "Benchmark",
+      "question": "Benchmark current compensation",
+      "route_slug": "cohort-benchmark",
+      "route_label": "Cohort Benchmark",
+      "framework": "GPF"
+    },
+    {
+      "kind": "Comparison",
+      "question": "Compare two trajectories",
+      "route_slug": "path-comparison",
+      "route_label": "Path Comparison Engine",
+      "framework": "PCC"
+    },
+    {
+      "kind": "Offer",
+      "question": "Evaluate a job offer",
+      "route_slug": "path-comparison",
+      "route_label": "Path Comparison Engine",
+      "framework": "PCC"
+    },
+    {
+      "kind": "Geography",
+      "question": "Test a city move",
+      "route_slug": "city-move-calculator",
+      "route_label": "City Move Calculator",
+      "framework": "GPF"
+    },
+    {
+      "kind": "Skill ROI",
+      "question": "Evaluate a skill investment",
+      "route_slug": "skill-roi",
+      "route_label": "Skill ROI Engine",
+      "framework": "SST"
+    },
+    {
+      "kind": "Risk",
+      "question": "Stress-test career volatility",
+      "route_slug": "career-volatility-index",
+      "route_label": "Career Volatility Index",
+      "framework": "CVI"
+    }
+  ],
+
+  "layers": [
+    {
+      "code": "HCAM",
+      "slug": "valuation",
+      "name": "Valuation & Earnings Power",
+      "purpose": "Models the trajectory as a financial asset — the DCF and NPV layer for careers, with engines for path valuation and major present-value decisions.",
+      "framework": "Human Capital Asset Model",
+      "governs": ["earnings curve", "growth assumptions", "discount paths", "NPV decisions"],
+      "data_layers": ["compensation priors", "salary curves", "sector growth", "discount premia"],
+      "roadmap_theme": "education NPV, sabbatical NPV, present-value sensitivity"
+    },
+    {
+      "code": "CVI",
+      "slug": "risk",
+      "name": "Volatility, Risk & Downside",
+      "purpose": "Models the downside, fragility, and tail risk of a path.",
+      "framework": "Career Volatility Index",
+      "governs": ["attrition pressure", "automation", "sector cycles", "concentration"],
+      "data_layers": ["attrition curves", "automation exposure", "layoff probabilities", "AI displacement priors"],
+      "roadmap_theme": "stochastic simulation, downturn stress-tests, sector mobility"
+    },
+    {
+      "code": "SST",
+      "slug": "skill",
+      "name": "Skill Capital & ROI",
+      "purpose": "Models the ROI and stacking effect of credential and skill investments.",
+      "framework": "Skill Stacking Theorem",
+      "governs": ["credential pricing", "skill stacking", "learning ROI"],
+      "data_layers": ["credential premium curves", "skill stack multipliers", "learning hours"],
+      "roadmap_theme": "specialization, network capital, reputation"
+    },
+    {
+      "code": "GPF",
+      "slug": "geography",
+      "name": "Geography & Mobility",
+      "purpose": "Models geography premia, cost drag, and mobility decisions across cities and borders.",
+      "framework": "Geographic Premium Framework",
+      "governs": ["city tiers", "cost-of-living drag", "purchasing power", "mobility"],
+      "data_layers": ["city baselines", "COL multipliers", "sector geography premia", "international parity"],
+      "roadmap_theme": "international mobility"
+    },
+    {
+      "code": "PCC",
+      "slug": "portfolio",
+      "name": "Path Comparison & Portfolio",
+      "purpose": "Models multiple trajectories side by side; constructs the career as a portfolio.",
+      "framework": "Portfolio Career Construction",
+      "governs": ["path comparison", "portfolio construction", "trajectory weighting"],
+      "data_layers": ["cluster path catalog", "transition curves", "firm-quality tiers", "equity terms"],
+      "roadmap_theme": "offer decomposition, portfolio construction, firm tiers, equity, raises"
+    },
+    {
+      "code": "OT",
+      "slug": "optionality",
+      "name": "Strategic Optionality & Founder",
+      "purpose": "Will model strategic optionality, founder convexity, and exit-path asymmetries — the framework where downside-bounded upside lives.",
+      "framework": "Optionality Theorem",
+      "governs": ["optionality", "convex tails", "founder paths", "exit asymmetry"],
+      "data_layers": ["founder EV data", "stage progression", "exit distributions", "PE/VC carry"],
+      "roadmap_theme": "founder EV, exit paths, optionality maps, income-optionality threshold"
+    }
+  ],
+
+  "tools": [
+    {
+      "slug": "professional-capital-value",
+      "name": "Professional Capital Value",
+      "purpose": "The discounted present value of your career, modeled as a financial asset.",
+      "layer": "HCAM",
+      "status": "live",
+      "decision": "What is this trajectory worth as a financial asset?",
+      "kind": "Valuation engine",
+      "inputs": ["cluster", "role", "YOE", "comp", "city", "horizon"],
+      "output": "Professional capital in ₹Cr · cohort percentile",
+      "signals": ["benchmark-backed", "DCF model", "terminal-routable"]
+    },
+    {
+      "slug": "mba-npv",
+      "name": "MBA NPV Calculator",
+      "purpose": "Discount the cost of two years against the lifetime earnings delta.",
+      "layer": "HCAM",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will discount the cost of two years against the lifetime earnings delta."
+    },
+    {
+      "slug": "phd-npv",
+      "name": "PhD NPV Calculator",
+      "purpose": "Long-horizon valuation of a doctoral path with academic and exit branches.",
+      "layer": "HCAM",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will value a doctoral path across academic and exit branches."
+    },
+    {
+      "slug": "sabbatical-npv",
+      "name": "Sabbatical NPV Impact",
+      "purpose": "What does a 6–18 month pause cost in present value terms?",
+      "layer": "HCAM",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will quantify the present-value cost of a 6–18 month career pause."
+    },
+    {
+      "slug": "fire-threshold",
+      "name": "FIRE Threshold Calculator",
+      "purpose": "The wealth point at which earned income becomes optional — the income-optionality threshold.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Valuation engine",
+      "forward": "Will compute the wealth point at which earned income becomes optional — the income-optionality threshold."
+    },
+    {
+      "slug": "offer-decomposer",
+      "name": "Offer Decomposer",
+      "purpose": "Break a job offer into base, variable, equity, and option value components before comparison.",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will break an offer into base, variable, equity, and option components — the input layer that feeds Path Comparison."
+    },
+    {
+      "slug": "career-volatility-index",
+      "name": "Career Volatility Index",
+      "purpose": "The risk-adjusted profile of a trajectory. How fragile is this path?",
+      "layer": "CVI",
+      "status": "live",
+      "decision": "How fragile is the current path under stress?",
+      "kind": "Stress-test engine",
+      "inputs": ["cluster", "role", "scenario inputs"],
+      "output": "CVI (0–3) · driver decomposition",
+      "signals": ["benchmark-backed", "decomposition"]
+    },
+    {
+      "slug": "monte-carlo-trajectory",
+      "name": "Monte Carlo Trajectory",
+      "purpose": "Stochastic simulation of career outcomes across thousands of paths.",
+      "layer": "CVI",
+      "status": "build",
+      "kind": "Stress-test engine",
+      "forward": "Will simulate thousands of career outcomes stochastically."
+    },
+    {
+      "slug": "recession-stress-test",
+      "name": "Recession Stress Test",
+      "purpose": "What happens to your trajectory in a 2008 or 2020-scale downturn?",
+      "layer": "CVI",
+      "status": "build",
+      "kind": "Stress-test engine",
+      "forward": "Will model trajectory impact under a 2008 or 2020-scale downturn."
+    },
+    {
+      "slug": "ai-displacement-index",
+      "name": "AI Displacement Index",
+      "purpose": "Role-level exposure to automation over a 10-year horizon.",
+      "layer": "CVI",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will quantify role-level automation exposure over a 10-year horizon."
+    },
+    {
+      "slug": "sector-mobility-index",
+      "name": "Sector Mobility Index",
+      "purpose": "How readily can you exit this sector if it compresses?",
+      "layer": "CVI",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will measure how easily this sector can be exited under compression."
+    },
+    {
+      "slug": "skill-roi",
+      "name": "Skill ROI Engine",
+      "purpose": "Treat skill acquisition as a capital allocation decision with a measurable return.",
+      "layer": "SST",
+      "status": "live",
+      "decision": "Is this skill or credential investment worth the time and cost?",
+      "kind": "Scenario engine",
+      "inputs": ["skill", "cluster", "role", "horizon"],
+      "output": "Payback period · lifetime ₹L premium",
+      "signals": ["benchmark-backed", "scenario-based"]
+    },
+    {
+      "slug": "specialization-premium",
+      "name": "Specialization Premium",
+      "purpose": "What does deep specialization pay over a generalist track?",
+      "layer": "SST",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will quantify what deep specialization pays over a generalist track."
+    },
+    {
+      "slug": "network-compound",
+      "name": "Network Compound Engine",
+      "purpose": "Network as compounding capital. What does it return?",
+      "layer": "SST",
+      "status": "build",
+      "kind": "Valuation engine",
+      "forward": "Will model network as compounding capital with a measurable return."
+    },
+    {
+      "slug": "reputation-index",
+      "name": "Reputation Index",
+      "purpose": "Reputation as a measurable asset that compounds compensation premium.",
+      "layer": "SST",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will measure reputation as a compounding compensation premium."
+    },
+    {
+      "slug": "city-move-calculator",
+      "name": "City Move Calculator",
+      "purpose": "Real wealth after rent, tax, and cost-of-living adjustments.",
+      "layer": "GPF",
+      "status": "live",
+      "decision": "What does a city move actually do to real compensation?",
+      "kind": "Comparison engine",
+      "inputs": ["origin city", "destination city", "comp", "housing"],
+      "output": "Real-comp delta · COL drag · break-even",
+      "signals": ["benchmark-backed", "comparative"]
+    },
+    {
+      "slug": "international-premium",
+      "name": "International Premium Map",
+      "purpose": "Cross-border compensation arbitrage with cost-of-living parity.",
+      "layer": "GPF",
+      "status": "build",
+      "kind": "Comparison engine",
+      "forward": "Will compute cross-border compensation arbitrage with COL parity."
+    },
+    {
+      "slug": "cohort-benchmark",
+      "name": "Cohort Benchmark",
+      "purpose": "Your position vs. a calibrated peer cohort across geography and role.",
+      "layer": "GPF",
+      "status": "live",
+      "decision": "Where does this compensation sit in the cohort?",
+      "kind": "Benchmark engine",
+      "inputs": ["cluster", "role", "city tier", "YOE band"],
+      "output": "Percentile · cohort spread · ₹L gap to median",
+      "signals": ["benchmark-backed", "terminal-routable"]
+    },
+    {
+      "slug": "trajectory-engine",
+      "name": "Trajectory Engine",
+      "purpose": "Multi-year scenario projection of your career under chosen assumptions.",
+      "layer": "PCC",
+      "status": "live",
+      "decision": "How does this single career path unfold year by year?",
+      "kind": "Scenario engine",
+      "inputs": ["profile", "growth", "discount", "volatility"],
+      "output": "Year-by-year curve · valuation · sensitivity bands",
+      "signals": ["scenario-based", "single-scenario"]
+    },
+    {
+      "slug": "portfolio-analyzer",
+      "name": "Portfolio Analyzer",
+      "purpose": "Treat your career as a portfolio of skills, roles, and option positions.",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will treat the career as a portfolio of skills, roles, and option positions."
+    },
+    {
+      "slug": "barbell-allocator",
+      "name": "Barbell Allocator",
+      "purpose": "Stable income paired with asymmetric upside. Calibrate the barbell.",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will calibrate stable income against asymmetric upside positions."
+    },
+    {
+      "slug": "path-comparison",
+      "name": "Path Comparison Engine",
+      "purpose": "Compare two professional trajectories side by side. PCV, percentile, risk-adjusted return — which path wins, and by how much.",
+      "layer": "PCC",
+      "status": "live",
+      "decision": "Of two paths, which produces more lifetime value after risk?",
+      "kind": "Comparison engine",
+      "inputs": ["path A", "path B", "horizon"],
+      "output": "Lifetime value delta · risk-adjusted ranking",
+      "signals": ["benchmark-backed", "comparative"]
+    },
+    {
+      "slug": "firm-tier-classifier",
+      "name": "Firm Tier Classifier",
+      "purpose": "Tier this firm against a calibrated firm-quality benchmark.",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will tier this firm against a calibrated firm-quality benchmark."
+    },
+    {
+      "slug": "bonus-ratio-benchmark",
+      "name": "Bonus Ratio Benchmark",
+      "purpose": "Variable comp as a share of total. Where do you sit on the ratio curve?",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will place variable compensation on the cluster-specific ratio curve."
+    },
+    {
+      "slug": "equity-calibration",
+      "name": "Equity Calibration",
+      "purpose": "Value equity grants honestly: dilution, vesting, liquidity, expected exit.",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will value equity grants honestly across dilution, vesting, and exit."
+    },
+    {
+      "slug": "raise-benchmark",
+      "name": "Raise Benchmark",
+      "purpose": "What's a market-rate raise for your role, tenure, and performance band?",
+      "layer": "PCC",
+      "status": "build",
+      "kind": "Benchmark engine",
+      "forward": "Will compute market-rate raises for role, tenure, and performance band."
+    },
+    {
+      "slug": "founder-ev",
+      "name": "Founder EV Simulator",
+      "purpose": "Expected value of a founder path under realistic exit distributions.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Stress-test engine",
+      "forward": "Will compute the expected value of a founder path under realistic exit distributions."
+    },
+    {
+      "slug": "exit-path-decomposer",
+      "name": "Exit Path Decomposer",
+      "purpose": "Map the realistic exits from your current role. Probabilities and payoffs.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will map realistic exits from the current role with probabilities and payoffs."
+    },
+    {
+      "slug": "optionality-tree",
+      "name": "Optionality Tree",
+      "purpose": "The tree of future moves your current position keeps open.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will surface the tree of future moves a current position keeps open."
+    },
+    {
+      "slug": "moat-builder",
+      "name": "Moat Builder",
+      "purpose": "What is your defensible advantage? How is it compounding?",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will identify the defensible advantage and measure its compounding rate."
+    },
+    {
+      "slug": "negotiation-lever-map",
+      "name": "Negotiation Lever Map",
+      "purpose": "The levers available in this specific negotiation, ranked by leverage.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Decomposition engine",
+      "forward": "Will rank negotiation levers by leverage in a specific situation."
+    },
+    {
+      "slug": "career-thesis",
+      "name": "Career Thesis Builder",
+      "purpose": "Your career thesis written as an investment memo. Falsifiable assumptions.",
+      "layer": "OT",
+      "status": "build",
+      "kind": "Scenario engine",
+      "forward": "Will articulate the career thesis as a falsifiable investment memo."
+    }
+  ]
+}
