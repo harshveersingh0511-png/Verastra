@@ -1,0 +1,13 @@
+{
+  "cluster_key": "healthcare_pharma_clinical_business",
+  "v1_status": "light",
+  "_note": "Pharma + hospital + diagnostics employer pages.",
+  "employers": [
+    { "name": "Apollo Hospitals", "careers_url": "https://www.apollohospitals.com/careers/", "parser": "listing-page", "default_paths_hint": ["hospital_administration", "healthcare_operations"], "active": true },
+    { "name": "Fortis Healthcare", "careers_url": "https://www.fortishealthcare.com/india/careers", "parser": "listing-page", "default_paths_hint": ["hospital_administration", "healthcare_operations"], "active": true },
+    { "name": "Sun Pharma", "careers_url": "https://sunpharma.com/careers/", "parser": "listing-page", "default_paths_hint": ["pharma_commercial", "medical_affairs"], "active": true },
+    { "name": "Cipla", "careers_url": "https://www.cipla.com/careers", "parser": "listing-page", "default_paths_hint": ["pharma_commercial", "medical_affairs"], "active": true },
+    { "name": "Dr. Reddy's", "careers_url": "https://www.drreddys.com/careers/", "parser": "listing-page", "default_paths_hint": ["pharma_commercial", "medical_affairs"], "active": true },
+    { "name": "Dr. Lal PathLabs", "careers_url": "https://www.lalpathlabs.com/careers.aspx", "parser": "listing-page", "default_paths_hint": ["diagnostics_business", "hospital_administration"], "active": true }
+  ]
+}

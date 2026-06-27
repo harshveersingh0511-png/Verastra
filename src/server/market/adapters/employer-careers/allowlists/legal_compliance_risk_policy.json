@@ -1,0 +1,11 @@
+{
+  "cluster_key": "legal_compliance_risk_policy",
+  "v1_status": "light",
+  "_note": "Law firm + in-house legal employers. Light seed.",
+  "employers": [
+    { "name": "Cyril Amarchand Mangaldas", "careers_url": "https://www.cyrilshroff.com/careers/", "parser": "listing-page", "default_paths_hint": ["legal_counsel"], "active": true },
+    { "name": "Shardul Amarchand Mangaldas", "careers_url": "https://www.amsshardul.com/careers/", "parser": "listing-page", "default_paths_hint": ["legal_counsel"], "active": true },
+    { "name": "AZB & Partners", "careers_url": "https://www.azbpartners.com/careers/", "parser": "listing-page", "default_paths_hint": ["legal_counsel"], "active": true },
+    { "name": "Khaitan & Co", "careers_url": "https://www.khaitanco.com/careers", "parser": "listing-page", "default_paths_hint": ["legal_counsel"], "active": true }
+  ]
+}

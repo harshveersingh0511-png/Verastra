@@ -1,0 +1,23 @@
+{
+  "cluster_key": "product_tech_data",
+  "v1_status": "live",
+  "_note": "Product/tech/data — Greenhouse + Lever + Ashby + Workable coverage among India-active companies. Verify each token via the public API URL before relying on first production run.",
+  "employers": [
+    { "name": "Stripe",      "careers_url": "https://stripe.com/jobs",                  "parser": "greenhouse",      "board_token": "stripe",      "default_paths_hint": ["software_engineering", "data_engineering", "product_management"], "active": true },
+    { "name": "Atlassian",   "careers_url": "https://www.atlassian.com/company/careers/all-jobs", "parser": "greenhouse", "board_token": "atlassian",   "default_paths_hint": ["software_engineering", "product_management", "data_science"], "active": true },
+    { "name": "Razorpay",    "careers_url": "https://razorpay.com/jobs/",                "parser": "lever",           "lever_token": "razorpay",    "default_paths_hint": ["software_engineering", "data_engineering", "product_management"], "active": true },
+    { "name": "Postman",     "careers_url": "https://www.postman.com/company/careers/",  "parser": "lever",           "lever_token": "postman",     "default_paths_hint": ["software_engineering", "product_management"], "active": true },
+    { "name": "Freshworks",  "careers_url": "https://www.freshworks.com/company/careers/", "parser": "greenhouse",    "board_token": "freshworks",  "default_paths_hint": ["software_engineering", "product_management", "data_science"], "active": true },
+    { "name": "Zomato",      "careers_url": "https://www.zomato.com/careers",            "parser": "lever",           "lever_token": "zomato",      "default_paths_hint": ["software_engineering", "data_science", "product_management"], "active": true },
+    { "name": "Swiggy",      "careers_url": "https://careers.swiggy.com/",               "parser": "lever",           "lever_token": "swiggy",      "default_paths_hint": ["software_engineering", "data_science", "product_management"], "active": true },
+    { "name": "PhonePe",     "careers_url": "https://www.phonepe.com/careers/",          "parser": "lever",           "lever_token": "phonepe",     "default_paths_hint": ["software_engineering", "data_engineering"], "active": true },
+    { "name": "Flipkart",    "careers_url": "https://www.flipkartcareers.com/",          "parser": "listing-page",                                  "default_paths_hint": ["software_engineering", "data_science", "product_management"], "active": true },
+    { "name": "Meesho",      "careers_url": "https://www.meesho.io/careers",             "parser": "lever",           "lever_token": "meesho",      "default_paths_hint": ["software_engineering", "data_science"], "active": true },
+    { "name": "Ramp",        "careers_url": "https://ramp.com/careers",                  "parser": "ashby",           "ashby_token": "ramp",        "default_paths_hint": ["software_engineering", "product_management"], "active": true },
+    { "name": "Notion",      "careers_url": "https://www.notion.so/careers",             "parser": "ashby",           "ashby_token": "notion",      "default_paths_hint": ["software_engineering", "product_management", "data_science"], "active": true },
+    { "name": "Linear",      "careers_url": "https://linear.app/careers",                "parser": "ashby",           "ashby_token": "linear",      "default_paths_hint": ["software_engineering", "product_management"], "active": true },
+    { "name": "Browserstack","careers_url": "https://www.browserstack.com/careers",      "parser": "workable",        "workable_id": "browserstack","default_paths_hint": ["software_engineering", "product_management"], "active": true },
+    { "name": "Hasura",      "careers_url": "https://hasura.io/careers/",                "parser": "lever",           "lever_token": "hasura",      "default_paths_hint": ["software_engineering", "data_engineering"], "active": true },
+    { "name": "Chargebee",   "careers_url": "https://www.chargebee.com/careers/",        "parser": "lever",           "lever_token": "chargebee",   "default_paths_hint": ["software_engineering", "product_management"], "active": true }
+  ]
+}

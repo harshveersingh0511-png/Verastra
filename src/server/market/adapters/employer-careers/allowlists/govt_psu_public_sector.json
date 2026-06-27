@@ -1,0 +1,9 @@
+{
+  "cluster_key": "govt_psu_public_sector",
+  "v1_status": "light",
+  "_note": "PSU careers also flow through the dedicated psu_official_portals adapter. This allowlist is intentionally thin — broad sources are weighted 0 for this cluster.",
+  "employers": [
+    { "name": "ONGC", "careers_url": "https://www.ongcindia.com/web/eng/career/recruitment-notification", "parser": "listing-page", "default_paths_hint": ["psu_officer", "public_sector_management"], "active": true },
+    { "name": "NTPC", "careers_url": "https://careers.ntpc.co.in/", "parser": "listing-page", "default_paths_hint": ["psu_officer"], "active": true }
+  ]
+}

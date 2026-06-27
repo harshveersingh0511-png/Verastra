@@ -1,0 +1,15 @@
+{
+  "cluster_key": "consulting_strategy_deals",
+  "v1_status": "live",
+  "_note": "Consulting + strategy + deals advisory employers. Most use proprietary or workday boards; we lean on JSON-LD on the careers pages.",
+  "employers": [
+    { "name": "McKinsey India", "careers_url": "https://www.mckinsey.com/careers/search-jobs?countries=99000111&jobtypes=99000077", "parser": "listing-page", "default_paths_hint": ["management_consulting"], "active": true },
+    { "name": "BCG India", "careers_url": "https://careers.bcg.com/global/en/india", "parser": "listing-page", "default_paths_hint": ["management_consulting"], "active": true },
+    { "name": "Bain India", "careers_url": "https://www.bain.com/careers/find-a-role/", "parser": "listing-page", "default_paths_hint": ["management_consulting"], "active": true },
+    { "name": "Strategy& (PwC)", "careers_url": "https://www.strategyand.pwc.com/in/en/careers.html", "parser": "listing-page", "default_paths_hint": ["management_consulting", "deals_advisory"], "active": true },
+    { "name": "Deloitte Consulting India", "careers_url": "https://www2.deloitte.com/in/en/pages/careers/topics/find-a-job.html", "parser": "listing-page", "default_paths_hint": ["management_consulting"], "active": true },
+    { "name": "Kearney India", "careers_url": "https://www.kearney.com/about/careers", "parser": "listing-page", "default_paths_hint": ["management_consulting"], "active": true },
+    { "name": "Accenture Strategy India", "careers_url": "https://www.accenture.com/in-en/careers/jobsearch", "parser": "listing-page", "default_paths_hint": ["management_consulting", "business_transformation"], "active": true },
+    { "name": "Alvarez & Marsal India", "careers_url": "https://www.alvarezandmarsal.com/careers", "parser": "listing-page", "default_paths_hint": ["deals_advisory", "business_transformation"], "active": true }
+  ]
+}

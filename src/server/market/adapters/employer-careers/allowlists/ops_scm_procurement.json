@@ -1,0 +1,12 @@
+{
+  "cluster_key": "ops_scm_procurement",
+  "v1_status": "light",
+  "_note": "Manufacturing / logistics / industrial employers. Light seed.",
+  "employers": [
+    { "name": "Tata Steel", "careers_url": "https://www.tatasteel.com/careers/job-opportunities/", "parser": "listing-page", "default_paths_hint": ["operations", "supply_chain", "manufacturing_ops"], "active": true },
+    { "name": "Mahindra & Mahindra", "careers_url": "https://www.mahindra.com/careers", "parser": "listing-page", "default_paths_hint": ["operations", "supply_chain", "manufacturing_ops"], "active": true },
+    { "name": "Larsen & Toubro", "careers_url": "https://www.larsentoubro.com/corporate/careers/", "parser": "listing-page", "default_paths_hint": ["operations", "procurement", "supply_chain"], "active": true },
+    { "name": "Delhivery", "careers_url": "https://www.delhivery.com/careers", "parser": "listing-page", "default_paths_hint": ["logistics", "operations", "supply_chain"], "active": true },
+    { "name": "Flipkart Supply Chain", "careers_url": "https://www.flipkartcareers.com/", "parser": "listing-page", "default_paths_hint": ["supply_chain", "logistics", "operations"], "active": true }
+  ]
+}
