@@ -1,14 +1,12 @@
 /* ──────────────────────────────────────────────────────────────────────
    FIRESTORE ADMIN INIT
 
-   Initializes firebase-admin from a single environment variable that
-   contains the full Firebase service-account JSON. Singleton.
+   Initializes firebase-admin from environment variables. Singleton.
 
-   Required env var (set in Netlify):
-     FIREBASE_SERVICE_ACCOUNT   — the full JSON downloaded from
-                                  Firebase Console → Project Settings →
-                                  Service accounts → Generate new
-                                  private key.
+   Required env vars (set in Netlify):
+     FIREBASE_PROJECT_ID
+     FIREBASE_CLIENT_EMAIL
+     FIREBASE_PRIVATE_KEY     (private key with \n preserved as literal "\n")
    ────────────────────────────────────────────────────────────────────── */
 
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
@@ -19,20 +17,19 @@ let _db = null;
 export function getDb() {
   if (_db) return _db;
 
-  if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
-    throw new Error('[firestore] missing FIREBASE_SERVICE_ACCOUNT environment variable');
-  }
+  const projectId  = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  // Netlify stores \n escapes literally; restore them.
+  const privateKey = (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 
-  let serviceAccount;
-  try {
-    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-  } catch (err) {
-    throw new Error(`[firestore] FIREBASE_SERVICE_ACCOUNT is not valid JSON: ${err.message}`);
+  if (!projectId || !clientEmail || !privateKey) {
+    throw new Error('[firestore] missing FIREBASE_PROJECT_ID / FIREBASE_CLIENT_EMAIL / FIREBASE_PRIVATE_KEY');
   }
 
   if (getApps().length === 0) {
     initializeApp({
-      credential: cert(serviceAccount),
+      credential: cert({ projectId, clientEmail, privateKey }),
+      projectId,
     });
   }
 
