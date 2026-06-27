@@ -7,9 +7,6 @@
    employer-cluster bias used at normalization tie-break).
    ────────────────────────────────────────────────────────────────────── */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { validateAdapter } from '../_base.js';
 import { parseGreenhouse } from './parsers/greenhouse.js';
 import { parseLever } from './parsers/lever.js';
@@ -21,8 +18,29 @@ import { parseSmartRecruiters } from './parsers/smartrecruiters.js';
 import { parseWorkable } from './parsers/workable.js';
 import { parseBreezyHR } from './parsers/breezyhr.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ALLOWLIST_DIR = path.join(__dirname, 'allowlists');
+/* Bundler-inlined allowlists. esbuild embeds each JSON at bundle
+   time — no runtime fs.readdir/readFile and no import.meta.url.
+   Works under both ESM and CJS output formats. New cluster
+   allowlists must be added to this static list to be picked up. */
+import academia_education_training        from './allowlists/academia_education_training.json'        with { type: 'json' };
+import consulting_strategy_deals          from './allowlists/consulting_strategy_deals.json'          with { type: 'json' };
+import design_creative_media              from './allowlists/design_creative_media.json'              with { type: 'json' };
+import fin_acct_tax                       from './allowlists/fin_acct_tax.json'                       with { type: 'json' };
+import govt_psu_public_sector             from './allowlists/govt_psu_public_sector.json'             with { type: 'json' };
+import healthcare_pharma_clinical_business from './allowlists/healthcare_pharma_clinical_business.json' with { type: 'json' };
+import hr_talent_ld                       from './allowlists/hr_talent_ld.json'                       with { type: 'json' };
+import legal_compliance_risk_policy       from './allowlists/legal_compliance_risk_policy.json'       with { type: 'json' };
+import ops_scm_procurement                from './allowlists/ops_scm_procurement.json'                with { type: 'json' };
+import product_tech_data                  from './allowlists/product_tech_data.json'                  with { type: 'json' };
+import research_analytics_knowledge       from './allowlists/research_analytics_knowledge.json'       with { type: 'json' };
+import sales_marketing_growth             from './allowlists/sales_marketing_growth.json'             with { type: 'json' };
+
+const ALLOWLISTS = [
+  academia_education_training, consulting_strategy_deals, design_creative_media,
+  fin_acct_tax, govt_psu_public_sector, healthcare_pharma_clinical_business,
+  hr_talent_ld, legal_compliance_risk_policy, ops_scm_procurement,
+  product_tech_data, research_analytics_knowledge, sales_marketing_growth,
+];
 
 const PARSER_DISPATCH = {
   greenhouse:      parseGreenhouse,
@@ -37,15 +55,9 @@ const PARSER_DISPATCH = {
 };
 
 export async function loadAllowlists() {
-  const files = await fs.readdir(ALLOWLIST_DIR);
-  const out = [];
-  for (const f of files) {
-    if (!f.endsWith('.json')) continue;
-    const raw = await fs.readFile(path.join(ALLOWLIST_DIR, f), 'utf8');
-    try { out.push(JSON.parse(raw)); }
-    catch (_e) { /* skip malformed allowlist */ }
-  }
-  return out;
+  /* Return the bundler-inlined allowlists. Async signature retained
+     for backward compatibility with any caller awaiting it. */
+  return ALLOWLISTS.filter(a => a && typeof a === 'object');
 }
 
 const adapter = {
