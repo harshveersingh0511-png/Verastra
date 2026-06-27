@@ -25,10 +25,6 @@
        version_info, and execution_summary.
    ────────────────────────────────────────────────────────────────────── */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import { getActiveAdapters } from './adapters/index.js';
 import { normalize } from './normalize/index.js';
 import { dedupeWithinSource } from './util/dedupe.js';
@@ -40,8 +36,11 @@ import { writeSnapshot, writeRawIngest, writeDebug, readPreviousSnapshotEvidence
 import { batchWrite, roleCityOps, roleSkillOps, overlayDerivedOp } from './firestore/batch.js';
 import { OVERLAY_VERSION } from './overlay-version.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const APPLICABILITY_PATH = path.resolve(__dirname, '../../../assets/js/data/source-applicability.json');
+/* Bundler-inlined data. esbuild reads source-applicability.json at
+   bundle time and embeds the parsed value here. Works under both ESM
+   and CJS output formats — no runtime fs.readFile or import.meta.url
+   needed. */
+import APPLICABILITY from '../../../assets/js/data/source-applicability.json' with { type: 'json' };
 
 /* ── Logger ──────────────────────────────────────────────────────────── */
 
@@ -123,13 +122,14 @@ export async function runRefresh(options = {}) {
 
   logger.info(`refresh start trigger=${trigger} dryRun=${dryRun} parallelism=${parallelism} adapterTimeoutMs=${adapterTimeoutMs}`);
 
-  /* Load source applicability */
-  let applicability = {};
-  try {
-    applicability = JSON.parse(await fs.readFile(APPLICABILITY_PATH, 'utf8'));
-  } catch (err) {
-    logger.error(`failed to load source-applicability.json: ${err.message}`);
-    if (!dryRun) await writeDebug(runId, 'applicability_load_failed', { error: err.message });
+  /* Source applicability is statically imported above; no runtime
+     file read needed. Wrap in a try just to keep the surrounding
+     error-handling shape unchanged. */
+  let applicability = APPLICABILITY;
+  if (!applicability || typeof applicability !== 'object') {
+    logger.error('source-applicability.json appears empty or malformed at bundle time');
+    if (!dryRun) await writeDebug(runId, 'applicability_load_failed', { error: 'empty_after_bundle' });
+    applicability = {};
   }
 
   /* Discover adapters */
