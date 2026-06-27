@@ -1,0 +1,28 @@
+# ──────────────────────────────────────────────────────────────────────
+# Verastra · Netlify configuration
+#
+# Frontend deploys as a static site. Backend lives in netlify/functions/
+# and exposes three endpoints: scheduled weekly refresh, manual refresh
+# (admin-gated), and a public health check.
+# ──────────────────────────────────────────────────────────────────────
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = [
+    "src/server/**",
+    "assets/js/data/clusters.js",
+    "assets/js/data/paths.js",
+    "assets/js/data/source-applicability.json",
+    "assets/js/data/cluster-search-seeds.json",
+    "src/server/market/adapters/employer-careers/allowlists/*.json",
+  ]
+  external_node_modules = ["firebase-admin"]
+
+# The market-refresh function's schedule is declared in
+# netlify/functions/market-refresh.js via the @netlify/functions
+# `schedule()` wrapper (current canonical syntax). No scheduler block
+# is declared here, to prevent duplicate / conflicting cron entries.
