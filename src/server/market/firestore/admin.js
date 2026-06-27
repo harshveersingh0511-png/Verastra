@@ -82,6 +82,35 @@ export function getDb() {
   console.log('[firestore-diagnostic] raw was surrounded by quotes:        ', rawHadQuotes);
   /* ─── END TEMPORARY DIAGNOSTIC ────────────────────────────────── */
 
+  console.log("========== FIREBASE ADMIN DEBUG ==========");
+  console.log("ADMIN_JS_VERSION = 2026-06-27-v3");
+
+  console.log("PROJECT_ID:", projectId);
+  console.log("CLIENT_EMAIL:", clientEmail);
+
+  console.log("RAW_KEY_LENGTH:", rawKey.length);
+  console.log("NORMALIZED_KEY_LENGTH:", normalizedKey.length);
+
+  console.log("KEY_START:", JSON.stringify(rawKey.substring(0, 30)));
+  console.log("KEY_END:", JSON.stringify(rawKey.substring(rawKey.length - 30)));
+
+  console.log("NORMALIZED_START:", JSON.stringify(normalizedKey.substring(0, 30)));
+  console.log("NORMALIZED_END:", JSON.stringify(normalizedKey.substring(normalizedKey.length - 30)));
+
+  console.log("HAS_LITERAL_BACKSLASH_N:", rawKey.includes("\\n"));
+  console.log("HAS_REAL_NEWLINES:", rawKey.includes("\n"));
+
+  console.log("BEGIN_MARKER:",
+    normalizedKey.startsWith("-----BEGIN PRIVATE KEY-----"));
+
+  console.log("END_MARKER:",
+    normalizedKey.trimEnd().endsWith("-----END PRIVATE KEY-----"));
+
+  console.log("NEWLINE_COUNT:",
+    (normalizedKey.match(/\n/g) || []).length);
+
+  console.log("==========================================");
+
   if (getApps().length === 0) {
     initializeApp({
       credential: cert({ projectId, clientEmail, privateKey: normalizedKey }),
