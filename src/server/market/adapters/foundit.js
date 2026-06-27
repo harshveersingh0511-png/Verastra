@@ -5,16 +5,13 @@
      https://www.foundit.in/search/<role-slug>-jobs-in-<city-slug>
    ────────────────────────────────────────────────────────────────────── */
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { getText, slug } from '../util/http.js';
 import { extractJsonLd, jsonLdJobPostings } from '../util/html.js';
 import { validateAdapter } from './_base.js';
 import { CITIES } from '../../../../assets/js/data/paths.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SEEDS_PATH = path.resolve(__dirname, '../../../../assets/js/data/cluster-search-seeds.json');
+/* Bundler-inlined; see naukri.js for rationale. */
+import SEEDS from '../../../../assets/js/data/cluster-search-seeds.json' with { type: 'json' };
 
 const MAX_QUERIES_PER_CLUSTER = 4;
 const MAX_CITIES_PER_CLUSTER  = 4;
@@ -24,7 +21,7 @@ const adapter = {
   kind: 'broad',
   v1_status: 'live',
   async fetch(ctx) {
-    const seeds = JSON.parse(await fs.readFile(SEEDS_PATH, 'utf8').catch(() => '{}'));
+    const seeds = SEEDS || {};
     const all = [];
     const t0 = Date.now();
 
