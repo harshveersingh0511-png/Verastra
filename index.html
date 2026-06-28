@@ -915,108 +915,6 @@
     border-radius: 4px;
   }
 
-  /* ── VERASTRA EMBLEM (CSS-driven 3D centerpiece) ───────────────────
-     Three stacked layers, all fixed at viewport center:
-       .emblem-stage  — outer fixed container, perspective wrapper
-       .emblem-halo   — pulsing brass radial glow
-       .emblem-orbit  — mouse-tilt parallax wrapper
-       #verastra-emblem — the actual logo image
-     mix-blend-mode: multiply consumes the cream paper bg of the JPG
-     into the page bg, leaving only the cordovan logo visible.
-     ────────────────────────────────────────────────────────────── */
-  .emblem-stage {
-    position: fixed;
-    inset: 0;
-    z-index: 1;            /* above bg-canvas (0), below content (3+) */
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1400px;
-    overflow: hidden;
-  }
-
-  .emblem-halo {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 760px; height: 760px;
-    max-width: 78vmin; max-height: 78vmin;
-    transform: translate(-50%, -50%);
-    background:
-      radial-gradient(circle at 50% 50%,
-        rgba(122, 62, 30, 0.20) 0%,
-        rgba(122, 62, 30, 0.10) 22%,
-        rgba(122, 62, 30, 0.03) 42%,
-        transparent 62%);
-    filter: blur(8px);
-    animation: emblemHaloBreath 8s ease-in-out infinite;
-    will-change: opacity, transform;
-  }
-  @keyframes emblemHaloBreath {
-    0%, 100% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.00); }
-    50%      { opacity: 1.00; transform: translate(-50%, -50%) scale(1.06); }
-  }
-
-  .emblem-orbit {
-    position: relative;
-    width: 640px;
-    max-width: 64vmin;
-    aspect-ratio: 1024 / 665;
-    transform-style: preserve-3d;
-    animation: emblemBreath 9s ease-in-out infinite;
-    will-change: transform;
-  }
-  @keyframes emblemBreath {
-    0%, 100% { transform: scale(1.00); }
-    50%      { transform: scale(1.028); }
-  }
-
-  #verastra-emblem {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    mix-blend-mode: multiply;
-    opacity: 0.95;
-    transform-origin: 50% 50%;
-    will-change: transform;
-    animation: emblemTurn 64s linear infinite;
-    filter: contrast(1.08) saturate(1.05);
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  @keyframes emblemTurn {
-    from { transform: rotateZ(0deg); }
-    to   { transform: rotateZ(360deg); }
-  }
-
-  /* When dark theme is active, the JPG cream background would dominate.
-     Switch to screen blend so the cordovan stays visible on obsidian. */
-  body:not(.theme-light) #verastra-emblem {
-    mix-blend-mode: screen;
-    filter: brightness(1.4) saturate(1.2);
-    opacity: 0.7;
-  }
-  body:not(.theme-light) .emblem-halo {
-    background:
-      radial-gradient(circle at 50% 50%,
-        rgba(201, 169, 97, 0.20) 0%,
-        rgba(201, 169, 97, 0.08) 28%,
-        transparent 62%);
-  }
-
-  /* Reduced motion — keep emblem but stop spinning */
-  @media (prefers-reduced-motion: reduce) {
-    #verastra-emblem,
-    .emblem-orbit,
-    .emblem-halo { animation: none !important; }
-  }
-
-  @media (max-width: 760px) {
-    .emblem-orbit { max-width: 80vmin; }
-    .emblem-halo  { max-width: 92vmin; max-height: 92vmin; }
-  }
-
   /* ── SCROLL PROGRESS BAR ─────────────────────────────── */
   .scroll-progress {
     position: fixed; top: 0; left: 0; right: 0;
@@ -1161,17 +1059,6 @@
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
-<!-- ── VERASTRA EMBLEM — heart of the page ──────────────────────────
-     Centered fixed-position monogram driven by CSS 3D transforms.
-     mix-blend-mode: multiply means the cream paper background of the
-     image dissolves into the page's parchment, leaving only the
-     cordovan logo visible. JS adds mouse parallax. ──────────────── -->
-<div class="emblem-stage" aria-hidden="true">
-  <div class="emblem-halo"></div>
-  <div class="emblem-orbit">
-    <img id="verastra-emblem" src="assets/img/verastra-emblem.jpg" alt="" draggable="false">
-  </div>
-</div>
 
 <div class="cursor-glow" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -1741,12 +1628,16 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    "three":                                  "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/loaders/GLTFLoader.js":     "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js",
+    "three/addons/loaders/DRACOLoader.js":    "https://unpkg.com/three@0.160.0/examples/jsm/loaders/DRACOLoader.js"
   }
 }
 </script>
 <script type="module">
-import * as THREE from 'three';
+import * as THREE      from 'three';
+import { GLTFLoader }  from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.getElementById('bg-canvas');
@@ -1827,6 +1718,172 @@ if (!reduceMotion && canvas) {
   const stars = new THREE.Points(starGeo, starMat);
   scene.add(stars);
 
+  // ── VERASTRA EMBLEM — the heart of the website ─────────────────
+  // GLB model (the copper-star emblem you authored), loaded async,
+  // placed dead-center in scene space — the WebGL canvas is z-index
+  // 0 so the content overlays it; the emblem reads as a luminous
+  // 3D backdrop sitting behind the eight acts of the page.
+
+  // Lighting needed for the GLB's PBR materials to read properly.
+  const emblemAmbient = new THREE.AmbientLight(0xffffff, 0.45);
+  scene.add(emblemAmbient);
+
+  const emblemKey = new THREE.DirectionalLight(0xffffff, 1.1);
+  emblemKey.position.set(2.5, 4.0, 3.5);
+  scene.add(emblemKey);
+
+  const emblemRim = new THREE.DirectionalLight(
+    isLight ? 0x9a4f26 : 0xc9a961,
+    isLight ? 0.55 : 0.75
+  );
+  emblemRim.position.set(-3.0, -1.5, 2.0);
+  scene.add(emblemRim);
+
+  const emblemFill = new THREE.PointLight(
+    isLight ? 0x7a3e1e : 0xe4c47a,
+    0.65, 12
+  );
+  emblemFill.position.set(0, 0.5, 2.0);
+  scene.add(emblemFill);
+
+  // Group placed dead-center. The loaded model is auto-sized and
+  // recentered so rotations spin around its geometric center, not
+  // the bounding-box pivot.
+  const emblemGroup = new THREE.Group();
+  emblemGroup.position.set(0, 0.4, -1.2);
+  scene.add(emblemGroup);
+
+  let emblemModel = null;
+  let emblemReady = false;
+
+  // Placeholder sphere — visible immediately so user sees the
+  // centerpiece exists. Replaced once the GLB streams in.
+  const placeholderGeo = new THREE.IcosahedronGeometry(0.9, 1);
+  const placeholderMat = new THREE.MeshStandardMaterial({
+    color: 0x7a3e1e,
+    metalness: 0.85,
+    roughness: 0.3,
+    emissive: 0x4a2412,
+    emissiveIntensity: 0.18
+  });
+  const placeholder = new THREE.Mesh(placeholderGeo, placeholderMat);
+  emblemGroup.add(placeholder);
+
+  // Draco decoder — loads WASM from Google's CDN gstatic mirror
+  // (widely cached, CORS-safe). GLTFLoader awaits decoder.ready
+  // internally before decoding any Draco-compressed primitive.
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+  dracoLoader.setDecoderConfig({ type: 'js' });
+
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.setDRACOLoader(dracoLoader);
+  console.log('[verastra] Draco loader configured; starting GLB load…');
+
+  // Wrap the GLTFLoader.load in a Promise so .catch handles any
+  // pipeline failure (network, decoder, parse).
+  Promise.resolve().then(() => {
+    gltfLoader.load(
+      'assets/models/verastra-emblem.glb',
+      gltf => {
+        const model = gltf.scene;
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        const TARGET_SIZE = 4.0;
+        const s = TARGET_SIZE / maxDim;
+        model.scale.setScalar(s);
+        const center = box.getCenter(new THREE.Vector3()).multiplyScalar(s);
+        model.position.sub(center);
+
+        // Force every material to be VISIBLE on light bg:
+        // - If material is missing/dark/PBR-broken, replace with
+        //   a cordovan MeshStandardMaterial so the geometry reads.
+        // - Otherwise keep the GLB's own material but bump envMap.
+        let meshCount = 0;
+        model.traverse(obj => {
+          if (obj.isMesh) {
+            meshCount++;
+            const m = obj.material;
+            const looksBroken =
+              !m ||
+              (m.color && m.color.r === 0 && m.color.g === 0 && m.color.b === 0) ||
+              (m.transparent && m.opacity < 0.05);
+            if (looksBroken) {
+              obj.material = new THREE.MeshStandardMaterial({
+                color: 0x7a3e1e,
+                metalness: 0.85,
+                roughness: 0.25,
+                emissive: 0x4a2412,
+                emissiveIntensity: 0.20
+              });
+            } else if (m && m.envMapIntensity !== undefined) {
+              m.envMapIntensity = 1.2;
+              m.needsUpdate = true;
+            }
+          }
+        });
+
+        // Swap out the placeholder
+        emblemGroup.remove(placeholder);
+        placeholderGeo.dispose();
+        placeholderMat.dispose();
+
+        emblemGroup.add(model);
+        emblemModel = model;
+        emblemReady = true;
+        console.log(`[verastra] Emblem GLB loaded — ${meshCount} meshes, scale ${s.toFixed(3)}`);
+      },
+      progress => {
+        if (progress.lengthComputable) {
+          const pct = (progress.loaded / progress.total) * 100;
+          if (Math.round(pct) % 25 === 0) {
+            console.log(`[verastra] Emblem loading… ${pct.toFixed(0)}%`);
+          }
+        }
+      },
+      err => console.error('[verastra] Emblem GLB load FAILED:', err)
+    );
+  }).catch(err => {
+    console.error('[verastra] Draco / GLB pipeline failed:', err);
+  });
+
+  // Brass halo plane behind the emblem (visible while GLB loads)
+  const emblemHaloGeo = new THREE.PlaneGeometry(8.5, 8.5);
+  const emblemHaloMat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uLight: { value: isLight ? 1.0 : 0.0 } },
+    vertexShader: `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      varying vec2 vUv;
+      uniform float uTime;
+      uniform float uLight;
+      void main() {
+        vec2 p = vUv - 0.5;
+        float r = length(p);
+        float pulse1 = 0.80 + 0.20 * sin(uTime * 0.55);
+        float pulse2 = 0.70 + 0.30 * sin(uTime * 0.35 + 1.3);
+        float core   = smoothstep(0.50, 0.04, r) * pulse1;
+        float outer  = (smoothstep(0.46, 0.30, r) - smoothstep(0.30, 0.18, r)) * pulse2 * 0.45;
+        float a = max(0.0, core + outer);
+        vec3 cDark  = vec3(0.89, 0.77, 0.48);
+        vec3 cLight = vec3(0.55, 0.30, 0.18);
+        vec3 col = mix(cDark, cLight, uLight);
+        gl_FragColor = vec4(col, a * mix(0.32, 0.26, uLight));
+      }
+    `
+  });
+  const emblemHalo = new THREE.Mesh(emblemHaloGeo, emblemHaloMat);
+  emblemHalo.position.z = -0.35;
+  emblemGroup.add(emblemHalo);
 
   // ── Career trajectory FAN (Monte Carlo possible futures) ─────────
   // Multiple ribbons emanate from a single "present" point on the
@@ -2078,8 +2135,26 @@ if (!reduceMotion && canvas) {
     stars.rotation.y = t * 0.015 + mouse.x * 0.18;
     stars.rotation.x = mouse.y * 0.08 + scrollY * 0.0004;
 
-    // (Verastra emblem is now an HTML <img> with CSS 3D transforms —
-    //  see #verastra-emblem in the DOM. Mouse parallax handled below.)
+    // ── Verastra emblem (GLB) — heart of the page ───────────
+    // Halo always animates (visible while GLB loads). Once the
+    // model is in, it inherits the group's rotation/breath.
+    emblemHaloMat.uniforms.uTime.value = t;
+
+    // Mouse parallax + slow continuous Y rotation (medal turning)
+    emblemGroup.rotation.y = t * 0.18 + mouse.x * 0.30;
+    emblemGroup.rotation.x = Math.sin(t * 0.13) * 0.06 - mouse.y * 0.14;
+    emblemGroup.rotation.z = Math.sin(t * 0.07) * 0.025;
+
+    // Breathing scale + soft float + gentle scroll parallax
+    const emblemBreath = 1 + Math.sin(t * 0.45) * 0.025;
+    emblemGroup.scale.setScalar(emblemBreath);
+    emblemGroup.position.y = 0.4 + Math.sin(t * 0.35) * 0.08 - scrollY * 0.0007;
+
+    // Rim light orbits slowly so the highlights travel across the
+    // emblem instead of staying static — the "metal catches light"
+    // beat that makes the surface feel alive.
+    emblemRim.position.x = Math.cos(t * 0.25) * 3.5;
+    emblemRim.position.z = Math.sin(t * 0.25) * 3.5 + 1.5;
 
     camera.position.x = mouse.x * 0.4;
     camera.position.y = -mouse.y * 0.3;
@@ -2091,42 +2166,6 @@ if (!reduceMotion && canvas) {
   tick();
 }
 
-// ── Emblem mouse-parallax tilt ────────────────────────
-// Adds true 3D tilt (rotateX/rotateY) on the .emblem-orbit wrapper
-// without overriding the continuous Z-rotation of #verastra-emblem.
-// Scroll fades the emblem out as user reads — heart remains while
-// you're at the hero, recedes as you progress through the content.
-(function emblemParallax() {
-  const orbit  = document.querySelector('.emblem-orbit');
-  const stage  = document.querySelector('.emblem-stage');
-  const halo   = document.querySelector('.emblem-halo');
-  if (!orbit || !stage) return;
-  let tx = 0, ty = 0, cx = 0, cy = 0, raf;
-  window.addEventListener('mousemove', e => {
-    tx = (e.clientX / window.innerWidth  - 0.5) * 2;  // -1..1
-    ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    if (!raf) raf = requestAnimationFrame(loop);
-  });
-  function loop() {
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    const rotY = cx * 14;   // degrees
-    const rotX = -cy * 11;
-    orbit.style.transform = `rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg)`;
-    if (halo) {
-      halo.style.marginLeft = `${cx * 18}px`;
-      halo.style.marginTop  = `${cy * 14}px`;
-    }
-    raf = (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001)
-      ? requestAnimationFrame(loop) : null;
-  }
-  // Scroll fade — emblem strongest at hero, recedes into the page
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    const fade = Math.max(0.18, 1 - y / (window.innerHeight * 1.2));
-    stage.style.opacity = String(fade);
-  }, { passive: true });
-})();
 
 // ── Reveal on scroll ──────────────────────────────────
 const io = new IntersectionObserver(entries => {
